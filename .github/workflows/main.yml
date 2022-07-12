@@ -7,6 +7,7 @@ on:
 permissions:
  contents: read
 
+
 env:
  S3_BUCKET_NAME: buildjardeploy
  PORJECT_NAME: PrJava
