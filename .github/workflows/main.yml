@@ -4,10 +4,6 @@ on:
   push:
     branches: [ "main" ]
 
-permissions:
- contents: read
-
-
 
 env:
  S3_BUCKET_NAME: buildjardeploy
@@ -28,6 +24,15 @@ jobs:
         with:
           java-version: '8'
           distribution: 'temurin'
+      - name: make application.properties
+        run: |
+          echo ">> mkdir & touch"
+          mkdir -p ./src/main/resources
+          cd ./src/main/resources
+          touch ./application.properties
+          echo ">> copy application.properties"
+          echo "${{ secrets.APPLICATION.PROPERTIES }}" >> ./application.properties
+          echo "server.port=8080" >> ./application.properties
       
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
@@ -56,15 +61,8 @@ jobs:
         run: aws  s3 cp --region ap-northeast-2 ./${GITHUB_SHA}.zip s3://$S3_BUCKET_NAME/$PORJECT_NAME/$GITHUB_SHA.ZIP
         working-directory: ${{env.working-directory}}
         
-      # Deploy
-      - name: Deploy
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: |
-          aws deploy create-deployment \
-          --application-name ${{ secrets.AWS_APP_NAME }} \
-          --deployment-group-name ${{ secrets.AWS_DEPLOYMENT_GROUP_NAME }} \
-          --file-exists-behavior OVERWRITE \
-          --s3-location bucket=${{ secrets.AWS_S3_BUCKET_NAME }},bundleType=zip,key=springboot-coup-build.zip \
-          --region ap-northeast-2
+      - name: Code Deploy #4
+        run: aws deploy create-deployment --application-name degether
+          --deployment-config-name CodeDeployDefault.OneAtATime
+          --deployment-group-name degether
+          --s3-location bucket=buildjardeploy,bundleType=zip,key=$GITHUB_SHA.zip
