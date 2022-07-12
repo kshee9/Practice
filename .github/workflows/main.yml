@@ -39,7 +39,7 @@ jobs:
         working-directory: ${{env.woriking-directory}}
 
       - name: Make zip file
-        run: zip -r ./$GITHUB_SHA.zip
+        run: zip -r ./${GITHUB_SHA}.zip
         shell: bash
         working-directory: ${{env.woriking-directory}}
         
@@ -51,6 +51,6 @@ jobs:
           aws-region: ${{ secrets.AWS.REGION}}
           
       - name: Upload to S3
-        run: aws  s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$buildjardeploy/$PrJava/$GITHUB_SHA.ZIP
+        run: aws  s3 cp --region ap-northeast-2 ./${GITHUB_SHA}.zip s3://$S3_BUCKET_NAME/$PORJECT_NAME/$GITHUB_SHA.ZIP
         working-directory: ${{env.working-directory}}
         
