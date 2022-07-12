@@ -7,6 +7,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env: 
+     working-directory: /PrJava
       
     steps:
       - uses: actions/checkout@v3
@@ -19,9 +21,12 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
         shell: bash
+        working-directory: ${env.woriking-directory}
        
  
 
       - name: Build with Gradle
         run: ./gradlew build
+        shell: bash
+        working-directory: ${env.woriking-directory}
 
