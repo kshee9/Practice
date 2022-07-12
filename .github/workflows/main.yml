@@ -2,7 +2,7 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
 
 permissions:
  contents: read
@@ -17,7 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     env: 
      working-directory: /PrJava
-      
+    
+    
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 8
@@ -49,5 +50,6 @@ jobs:
           aws-region: ${{ secrets.AWS.REGION}}
           
       - name: Upload to S3
-        run: aws  s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3:
+        run: aws  s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$buildjardeploy/$PrJava/$GITHUB_SHA.ZIP
         working-directory: ${{env.working-directory}}
+        
