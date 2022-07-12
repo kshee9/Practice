@@ -18,6 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     env: 
      working-directory: ./
+   
     
     
     steps:
@@ -38,8 +39,9 @@ jobs:
         shell: bash
         working-directory: ${{env.woriking-directory}}
 
+    
       - name: Make zip file
-        run: zip -r ./${GITHUB_SHA}.zip
+        run: zip -r ./${GITHUB_SHA}.zip .
         shell: bash
         working-directory: ${{env.woriking-directory}}
         
