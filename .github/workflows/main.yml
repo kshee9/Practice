@@ -1,4 +1,4 @@
-name: Java CI with Gradle
+name: Java CI
 
 on:
   push:
@@ -16,7 +16,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env: 
-     working-directory: /PrJava
+     working-directory: ./PrJava
     
     
     steps:
