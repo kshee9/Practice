@@ -23,8 +23,6 @@ jobs:
         shell: bash
         working-directory: ${env.woriking-directory}
        
- 
-
       - name: Build with Gradle
         run: ./gradlew build
         shell: bash
