@@ -11,13 +11,13 @@ permissions:
 
 env:
  S3_BUCKET_NAME: buildjardeploy
- PORJECT_NAME: PrJava
+ PORJECT_NAME: Test-deploy
  
 jobs:
   build:
     runs-on: ubuntu-latest
     env: 
-     working-directory: ./PrJava
+     working-directory: ./
     
     
     steps:
