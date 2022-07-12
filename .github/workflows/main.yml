@@ -58,7 +58,7 @@ jobs:
         
 
       - name: Code Deploy #4
-        run: aws deploy create-deployment --application-name {degether}
+        run: aws deploy create-deployment --application-name degether
           --deployment-config-name CodeDeployDefault.OneAtATime
-          --deployment-group-name {degether}
-          --s3-location bucket={buildjar},bundleType=zip,key=$GITHUB_SHA.zip
+          --deployment-group-name degether
+          --s3-location bucket=buildjardeploy,bundleType=zip,key=$GITHUB_SHA.zip
